@@ -5,6 +5,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(of="id")
 public abstract class Usuario {
 
     private Long id;

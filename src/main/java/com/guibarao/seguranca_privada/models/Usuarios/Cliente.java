@@ -1,6 +1,6 @@
 package com.guibarao.seguranca_privada.models;
 import lombok.*;
-
+import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
