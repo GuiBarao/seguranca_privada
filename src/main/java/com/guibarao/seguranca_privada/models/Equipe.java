@@ -3,6 +3,9 @@ package com.guibarao.seguranca_privada.models;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
+
+import com.guibarao.seguranca_privada.models.Usuarios.Cliente;
+import com.guibarao.seguranca_privada.models.Usuarios.Seguranca;
 import lombok.*;
 
 @NoArgsConstructor
