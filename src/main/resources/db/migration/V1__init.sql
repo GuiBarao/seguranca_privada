@@ -2,9 +2,10 @@ CREATE TABLE usuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome_usuario VARCHAR(100) NOT NULL,
     status ENUM('ATIVO', 'INATIVO') DEFAULT 'ATIVO',
-    nome_completo VARCHAR(200),
-    senha VARCHAR(250),
-    tipo ENUM('ADM', 'CLIENTE', 'SEGURANCA'));
+    nome_completo VARCHAR(200) NOT NULL,
+    senha VARCHAR(250) NOT NULL,
+    telefone VARCHAR(50),
+    tipo ENUM('ADMINISTRADOR', 'CLIENTE', 'SEGURANCA'));
 
 CREATE TABLE cobranca (
     id INT AUTO_INCREMENT PRIMARY KEY,

@@ -15,6 +15,7 @@ import java.util.List;
 @Setter
 public class Cliente extends Usuario {
     private Plano plano;
+    private Long idPlano;
     private List<Endereco> enderecos = new ArrayList<Endereco>();
     private String telefone;
     private List<Parcela> parcelas = new ArrayList<Parcela>();

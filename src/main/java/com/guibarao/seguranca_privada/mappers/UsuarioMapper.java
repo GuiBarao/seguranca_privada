@@ -1,39 +1,34 @@
 package com.guibarao.seguranca_privada.mappers;
 
-import com.guibarao.seguranca_privada.dtos.usuario.UsuarioCadastroDTO;
+import com.guibarao.seguranca_privada.dtos.cliente.ClienteCadastroDTO;
+import com.guibarao.seguranca_privada.dtos.funcionario.FuncionarioCadastroDTO;
 import com.guibarao.seguranca_privada.dtos.usuario.UsuarioPublicDTO;
-import com.guibarao.seguranca_privada.models.Usuarios.Administrador;
 import com.guibarao.seguranca_privada.models.Usuarios.Cliente;
 
-import com.guibarao.seguranca_privada.models.Usuarios.Seguranca;
+import com.guibarao.seguranca_privada.models.Usuarios.Funcionario;
+import com.guibarao.seguranca_privada.models.Usuarios.TipoUsuario;
 import com.guibarao.seguranca_privada.models.Usuarios.Usuario;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses=EnderecoMapper.class)
 public interface UsuarioMapper {
 
-    default Usuario toModel(UsuarioCadastroDTO dadosCadastro) {
-        return switch(dadosCadastro.tipo()) {
-            case CLIENTE -> toCliente(dadosCadastro);
-            case ADM -> toAdministrador(dadosCadastro);
-            case SEGURANCA -> toSeguranca(dadosCadastro);
-        };
-    }
+
 
     @Mapping(target="plano", ignore = true)
-    @Mapping(target="enderecos", ignore = true)
-    @Mapping(target="telefone", ignore = true)
+    @Mapping(target="enderecos", source="enderecos", defaultExpression = "java(new ArrayList<Endereco>())")
     @Mapping(target="parcelas", ignore = true)
-    Cliente toCliente(UsuarioCadastroDTO dadosCadastro);
+    Cliente toModel(ClienteCadastroDTO dadosCadastro);
 
+    @Mapping(target="indisponibilidade", ignore=true)
+    @Mapping(target="tipoUsuario", source = "tipoUsuario")
+    Funcionario toModel(FuncionarioCadastroDTO dadosCadastro, TipoUsuario tipoUsuario);
 
-    Administrador toAdministrador(UsuarioCadastroDTO dadosCadastro);
-
-    @Mapping(target="indisponibilidade", ignore = true)
-    Seguranca toSeguranca(UsuarioCadastroDTO dadosCadastro);
 
     @Mapping(target="tipo", expression="java(usuario.getTipoUsuario())")
     @Mapping(target="ativo", constant = "true")
     UsuarioPublicDTO toPublicDTO(Usuario usuario);
+
+
 }

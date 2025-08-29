@@ -1,6 +1,8 @@
 package com.guibarao.seguranca_privada.controllers;
 
-import com.guibarao.seguranca_privada.dtos.usuario.UsuarioCadastroDTO;
+import com.guibarao.seguranca_privada.dtos.cliente.ClienteCadastroDTO;
+import com.guibarao.seguranca_privada.dtos.funcionario.FuncionarioCadastroDTO;
+import com.guibarao.seguranca_privada.models.Usuarios.TipoUsuario;
 import com.guibarao.seguranca_privada.dtos.usuario.UsuarioPublicDTO;
 import com.guibarao.seguranca_privada.services.UsuariosService;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +23,31 @@ public class UsuariosController {
         this.usuariosService = usuariosService;
     }
 
-    @PostMapping
-    public ResponseEntity<UsuarioPublicDTO> cadastrarUsuario(@RequestBody UsuarioCadastroDTO dadosCadastro) {
+    @PostMapping("/clientes")
+    public ResponseEntity<UsuarioPublicDTO> cadastrarCliente(@RequestBody ClienteCadastroDTO dadosCadastro) {
 
         UsuarioPublicDTO novoUsuario = usuariosService.cadastrar(dadosCadastro);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
     }
+
+    @PostMapping("/administradores")
+    public ResponseEntity<UsuarioPublicDTO> cadastrarAdministrador(@RequestBody FuncionarioCadastroDTO dadosFuncionario) {
+
+        UsuarioPublicDTO novoUsuario = usuariosService.cadastrar(dadosFuncionario, TipoUsuario.ADMINISTRADOR);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
+    }
+
+    @PostMapping("/segurancas")
+    public ResponseEntity<UsuarioPublicDTO> cadastrarSeguranca(@RequestBody FuncionarioCadastroDTO dadosFuncionario) {
+
+        UsuarioPublicDTO novoUsuario = usuariosService.cadastrar(dadosFuncionario, TipoUsuario.SEGURANCA);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
+    }
+
+
 
 
 }

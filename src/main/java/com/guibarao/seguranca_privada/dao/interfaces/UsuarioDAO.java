@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface UsuarioDAO {
-    Long create(Usuario usuario);
+    Long createUsuario(Usuario usuario);
 
     Usuario buscarUsuarioByUsername(String nomeUsuario);
 }
