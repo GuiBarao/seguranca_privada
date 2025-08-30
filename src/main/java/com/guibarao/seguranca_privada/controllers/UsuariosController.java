@@ -5,6 +5,7 @@ import com.guibarao.seguranca_privada.dtos.funcionario.FuncionarioCadastroDTO;
 import com.guibarao.seguranca_privada.models.Usuarios.TipoUsuario;
 import com.guibarao.seguranca_privada.dtos.usuario.UsuarioPublicDTO;
 import com.guibarao.seguranca_privada.services.UsuariosService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ public class UsuariosController {
     }
 
     @PostMapping("/clientes")
-    public ResponseEntity<UsuarioPublicDTO> cadastrarCliente(@RequestBody ClienteCadastroDTO dadosCadastro) {
+    public ResponseEntity<UsuarioPublicDTO> cadastrarCliente(@Valid @RequestBody ClienteCadastroDTO dadosCadastro) {
 
         UsuarioPublicDTO novoUsuario = usuariosService.cadastrar(dadosCadastro);
 
@@ -32,7 +33,7 @@ public class UsuariosController {
     }
 
     @PostMapping("/administradores")
-    public ResponseEntity<UsuarioPublicDTO> cadastrarAdministrador(@RequestBody FuncionarioCadastroDTO dadosFuncionario) {
+    public ResponseEntity<UsuarioPublicDTO> cadastrarAdministrador(@Valid @RequestBody FuncionarioCadastroDTO dadosFuncionario) {
 
         UsuarioPublicDTO novoUsuario = usuariosService.cadastrar(dadosFuncionario, TipoUsuario.ADMINISTRADOR);
 
@@ -40,7 +41,7 @@ public class UsuariosController {
     }
 
     @PostMapping("/segurancas")
-    public ResponseEntity<UsuarioPublicDTO> cadastrarSeguranca(@RequestBody FuncionarioCadastroDTO dadosFuncionario) {
+    public ResponseEntity<UsuarioPublicDTO> cadastrarSeguranca(@Valid @RequestBody FuncionarioCadastroDTO dadosFuncionario) {
 
         UsuarioPublicDTO novoUsuario = usuariosService.cadastrar(dadosFuncionario, TipoUsuario.SEGURANCA);
 
