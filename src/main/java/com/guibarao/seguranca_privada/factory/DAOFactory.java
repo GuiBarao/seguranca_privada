@@ -5,6 +5,7 @@ import java.sql.Connection;
 import com.guibarao.seguranca_privada.dao.impl.*;
 import com.guibarao.seguranca_privada.dao.interfaces.EnderecoDAO;
 import com.guibarao.seguranca_privada.dao.interfaces.PlanoDAO;
+import com.guibarao.seguranca_privada.dao.interfaces.SolicitacaoDAO;
 import com.guibarao.seguranca_privada.dao.interfaces.UsuarioDAO;
 
 import lombok.*;
@@ -26,5 +27,7 @@ public class DAOFactory {
     public UsuarioDAO getUsuarioDAO() {return new UsuarioDAOImpl(connection);}
 
     public PlanoDAO getPlanoDAO() {return new PlanoDAOImpl(connection);}
+
+    public SolicitacaoDAO getSolicitacaoDAO() {return new SolicitacaoDAOImpl(connection);}
 }
 

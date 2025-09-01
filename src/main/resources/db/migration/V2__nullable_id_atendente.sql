@@ -1,0 +1,1 @@
+ALTER TABLE solicitacao MODIFY id_atendente INT NULL;

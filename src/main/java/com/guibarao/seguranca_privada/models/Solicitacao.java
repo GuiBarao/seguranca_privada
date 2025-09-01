@@ -9,9 +9,11 @@ import lombok.*;
 @NoArgsConstructor
 public class Solicitacao {
     private Long id;
-    private String decricao;
+    private String descricao;
     private StatusSolicitacoes status;
     private Cliente solicitante;
+    private Long idSolicitante;
     private Funcionario atendente;
+    private Long idAtendente;
 
 }

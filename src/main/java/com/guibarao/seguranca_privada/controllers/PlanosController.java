@@ -2,7 +2,6 @@ package com.guibarao.seguranca_privada.controllers;
 
 import com.guibarao.seguranca_privada.dtos.plano.PlanoCadastroDTO;
 import com.guibarao.seguranca_privada.dtos.plano.PlanoPublicDTO;
-import com.guibarao.seguranca_privada.models.Plano;
 import com.guibarao.seguranca_privada.services.PlanoService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
