@@ -9,4 +9,6 @@ public interface SolicitacaoDAO {
     public Solicitacao buscarById(Long id);
 
     public Boolean updateAtendente(Long idSolicitante, Long idAtendente);
+
+    public boolean deleteSolicitacao(Long idSolicitacao);
 }

@@ -4,5 +4,5 @@ public enum StatusSolicitacoes{
     PENDENTE,
     ANALISE,
     ACEITA,
-    NEGADA
+    DELETADA
 }

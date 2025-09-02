@@ -91,6 +91,23 @@ public class SolicitacaoDAOImpl implements SolicitacaoDAO {
         }
     }
 
+    @Override
+    public boolean deleteSolicitacao(Long idSolicitacao) {
+        String query = "UPDATE solicitacao SET status = 'DELETADA' WHERE id = ?;";
+
+        try(PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setLong(1, idSolicitacao);
+
+            int linhasAlteradas = ps.executeUpdate();
+
+            return linhasAlteradas > 0;
+
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
 
     private Solicitacao resultSetToModel(ResultSet rs) throws SQLException {
 

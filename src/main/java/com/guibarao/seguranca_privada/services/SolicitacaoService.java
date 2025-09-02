@@ -97,5 +97,26 @@ public class SolicitacaoService {
         }
     }
 
+    public Boolean excluirSolicitacao(Long idSolicitacao) {
+        try(Connection connection = connectionFactory.getConnection()) {
+
+            DAOFactory daoFactory = new DAOFactory(connection);
+            SolicitacaoDAO solicitacaoDAO = daoFactory.getSolicitacaoDAO();
+
+            Boolean excluido = solicitacaoDAO.deleteSolicitacao(idSolicitacao);
+
+            if(!excluido) {
+                return null;
+            }
+
+            return true;
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+
 
 }

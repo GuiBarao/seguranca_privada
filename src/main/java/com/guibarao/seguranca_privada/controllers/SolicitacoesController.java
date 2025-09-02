@@ -60,6 +60,17 @@ public class SolicitacoesController {
         return ResponseEntity.status(HttpStatus.OK).body(solicitacaoAlterada);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarSolicitacao(@PathVariable Long id) {
+
+        if(solicitacaoService.excluirSolicitacao(id) == null) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+
+    }
+
 
 
 }
