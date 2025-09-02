@@ -16,4 +16,13 @@ public class Solicitacao {
     private Funcionario atendente;
     private Long idAtendente;
 
+    public Solicitacao(Long id, String descricao, StatusSolicitacoes status, Cliente solicitante, Funcionario atendente) {
+        this.id = id;
+        this.descricao = descricao;
+        this.status = status;
+        this.solicitante = solicitante;
+        this.atendente = atendente;
+
+    }
+
 }

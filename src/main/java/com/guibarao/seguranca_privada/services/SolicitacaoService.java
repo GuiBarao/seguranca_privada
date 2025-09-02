@@ -1,6 +1,7 @@
 package com.guibarao.seguranca_privada.services;
 
 import com.guibarao.seguranca_privada.dao.interfaces.SolicitacaoDAO;
+import com.guibarao.seguranca_privada.dtos.solicitacao.SolicitacaoAtendimentoDTO;
 import com.guibarao.seguranca_privada.dtos.solicitacao.SolicitacaoCadastroDTO;
 import com.guibarao.seguranca_privada.dtos.solicitacao.SolicitacaoPublicDTO;
 import com.guibarao.seguranca_privada.factory.ConnectionFactory;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 @Service
 public class SolicitacaoService {
@@ -44,6 +46,55 @@ public class SolicitacaoService {
             return null;
         }
 
+    }
+
+    /*public List<SolicitacaoPublicDTO> listarSolicitacoes(StatusSolicitacoes status,
+                                                         Long idAtendente,
+                                                         Long idSolicitante){
+
+
+
+    }*/
+
+    public SolicitacaoPublicDTO buscarSolicitacao(Long idSolicitacao) {
+        try(Connection connection = connectionFactory.getConnection()) {
+
+            DAOFactory daoFactory = new DAOFactory(connection);
+            SolicitacaoDAO solicitacaoDAO = daoFactory.getSolicitacaoDAO();
+
+            Solicitacao solicitacaoEncontrada = solicitacaoDAO.buscarById(idSolicitacao);
+
+            if(solicitacaoEncontrada == null) {
+                return null;
+            }
+
+            return solicitacaoMapper.toDTO(solicitacaoEncontrada);
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public SolicitacaoPublicDTO atenderSolicitacao(SolicitacaoAtendimentoDTO dadosAtendimento) {
+        try(Connection connection = connectionFactory.getConnection()) {
+
+            DAOFactory daoFactory = new DAOFactory(connection);
+            SolicitacaoDAO solicitacaoDAO = daoFactory.getSolicitacaoDAO();
+
+            Boolean alterado = solicitacaoDAO.updateAtendente(dadosAtendimento.idSolicitacao(), dadosAtendimento.idAtendente());
+
+            if(!alterado) {
+                return null;
+            }
+
+            Solicitacao solicitacaoAlterada = solicitacaoDAO.buscarById(dadosAtendimento.idSolicitacao());
+            return solicitacaoMapper.toDTO(solicitacaoAlterada);
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
 

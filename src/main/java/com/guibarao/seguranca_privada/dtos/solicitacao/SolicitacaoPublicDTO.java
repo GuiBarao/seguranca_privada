@@ -6,7 +6,9 @@ public record SolicitacaoPublicDTO(
     Long id,
     String descricao,
     Long idSolicitante,
+    String nomeUsuarioSolicitante,
     Long idAtendente,
+    String nomeUsuarioAtendente,
     StatusSolicitacoes status
 
 ) {}

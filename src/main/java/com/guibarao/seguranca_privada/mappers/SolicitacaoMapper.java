@@ -13,5 +13,9 @@ public interface SolicitacaoMapper {
     @Mapping(source="descricao", target="descricao")
     public Solicitacao toModel(SolicitacaoCadastroDTO dadosCadastroSolicitacao);
 
+    @Mapping(source="solicitante.id", target="idSolicitante")
+    @Mapping(source="atendente.id", target="idAtendente")
+    @Mapping(source="solicitante.nomeUsuario", target="nomeUsuarioSolicitante")
+    @Mapping(source="atendente.nomeUsuario", target="nomeUsuarioAtendente")
     public SolicitacaoPublicDTO toDTO(Solicitacao solicitacao);
 }
