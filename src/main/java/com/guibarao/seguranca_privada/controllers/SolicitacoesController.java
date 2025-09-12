@@ -30,15 +30,17 @@ public class SolicitacoesController {
         return ResponseEntity.status(HttpStatus.CREATED).body(novaSolicitacao);
     }
 
-    /*@GetMapping
-    public ResponseEntity<List<SolicitacaoPublicDTO>> listarSolicitacoes(@RequestParam(required = false) LocalDate dataInical,
+    @GetMapping
+    public ResponseEntity<List<SolicitacaoPublicDTO>> listarSolicitacoes(@RequestParam(required = false) LocalDate dataInicial,
                                                                          @RequestParam(required = false) LocalDate dataFinal,
-                                                                         @RequestParam(required = false, defaultValue="PENDENTE") StatusSolicitacoes status,
+                                                                         @RequestParam(required = false) StatusSolicitacoes status,
                                                                          @RequestParam(required = false) Long idAtendente,
                                                                          @RequestParam(required = false) Long idSolicitante) {
 
+        List<SolicitacaoPublicDTO> solicitacoes =  solicitacaoService.consultarSolicitacoes(dataInicial, dataFinal, status, idAtendente, idSolicitante);
 
-    }*/
+        return ResponseEntity.status(HttpStatus.OK).body(solicitacoes);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<SolicitacaoPublicDTO> buscarSolicitacao(@PathVariable Long id) {
@@ -60,16 +62,36 @@ public class SolicitacoesController {
         return ResponseEntity.status(HttpStatus.OK).body(solicitacaoAlterada);
     }
 
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarSolicitacao(@PathVariable Long id) {
 
-        if(solicitacaoService.excluirSolicitacao(id) == null) {
+        if(!solicitacaoService.excluirSolicitacao(id)) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
 
         return ResponseEntity.status(HttpStatus.OK).build();
 
     }
+
+    @PatchMapping("/{id}/aceitar")
+    public ResponseEntity<SolicitacaoPublicDTO> aceitarSolicitacao(@PathVariable Long id){
+        if(!solicitacaoService.aceitarSolicitacao(id)) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PatchMapping("{id}/devolver")
+    public ResponseEntity<SolicitacaoPublicDTO> devolverSolicitacao(@PathVariable Long id){
+        if(!solicitacaoService.devolverSolicitacao(id)) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 
 
 

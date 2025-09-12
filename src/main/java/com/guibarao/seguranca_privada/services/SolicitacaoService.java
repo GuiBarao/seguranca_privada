@@ -13,13 +13,15 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class SolicitacaoService {
 
-    private ConnectionFactory connectionFactory;
-    private SolicitacaoMapper solicitacaoMapper;
+    private final ConnectionFactory connectionFactory;
+    private final SolicitacaoMapper solicitacaoMapper;
 
     public SolicitacaoService(ConnectionFactory connectionFactory,
                               SolicitacaoMapper solicitacaoMapper) {
@@ -39,6 +41,7 @@ public class SolicitacaoService {
 
             novaSolicitacao.setId(idGerado);
             novaSolicitacao.setStatus(StatusSolicitacoes.PENDENTE);
+            novaSolicitacao.setSolicitado_em(LocalDateTime.now());
             return solicitacaoMapper.toDTO(novaSolicitacao);
         }
         catch(SQLException e) {
@@ -48,13 +51,6 @@ public class SolicitacaoService {
 
     }
 
-    /*public List<SolicitacaoPublicDTO> listarSolicitacoes(StatusSolicitacoes status,
-                                                         Long idAtendente,
-                                                         Long idSolicitante){
-
-
-
-    }*/
 
     public SolicitacaoPublicDTO buscarSolicitacao(Long idSolicitacao) {
         try(Connection connection = connectionFactory.getConnection()) {
@@ -64,7 +60,7 @@ public class SolicitacaoService {
 
             Solicitacao solicitacaoEncontrada = solicitacaoDAO.buscarById(idSolicitacao);
 
-            if(solicitacaoEncontrada == null) {
+            if(solicitacaoEncontrada == null || solicitacaoEncontrada.getStatus() == StatusSolicitacoes.DELETADA) {
                 return null;
             }
 
@@ -98,12 +94,25 @@ public class SolicitacaoService {
     }
 
     public Boolean excluirSolicitacao(Long idSolicitacao) {
+       return alterarStatusSolicitacao(idSolicitacao, StatusSolicitacoes.DELETADA);
+    }
+
+    public Boolean aceitarSolicitacao(Long idSolicitacao) {
+        return alterarStatusSolicitacao(idSolicitacao, StatusSolicitacoes.ACEITA);
+    }
+
+    public Boolean devolverSolicitacao(Long idSolicitacao) {
+        return alterarStatusSolicitacao(idSolicitacao, StatusSolicitacoes.PENDENTE);
+    }
+
+
+    private Boolean alterarStatusSolicitacao(Long idSolicitacao, StatusSolicitacoes status) {
         try(Connection connection = connectionFactory.getConnection()) {
 
             DAOFactory daoFactory = new DAOFactory(connection);
             SolicitacaoDAO solicitacaoDAO = daoFactory.getSolicitacaoDAO();
 
-            Boolean excluido = solicitacaoDAO.deleteSolicitacao(idSolicitacao);
+            boolean excluido = solicitacaoDAO.updateStatusSolicitacao(idSolicitacao, status);
 
             if(!excluido) {
                 return null;
@@ -115,6 +124,26 @@ public class SolicitacaoService {
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    public List<SolicitacaoPublicDTO> consultarSolicitacoes( LocalDate dataInicial, LocalDate dataFinal,
+                                                             StatusSolicitacoes status,
+                                                             Long idAtendente, Long idSolicitante) {
+
+        try(Connection connection = connectionFactory.getConnection()) {
+
+            DAOFactory daoFactory = new DAOFactory(connection);
+            SolicitacaoDAO solicitacaoDAO = daoFactory.getSolicitacaoDAO();
+
+            List<Solicitacao> solicitacoes = solicitacaoDAO.readSolicitacoes(dataInicial, dataFinal, status, idAtendente, idSolicitante);
+
+            return solicitacoes.stream().filter(s -> s.getStatus() != StatusSolicitacoes.DELETADA).map(solicitacaoMapper::toDTO).toList();
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+
     }
 
 

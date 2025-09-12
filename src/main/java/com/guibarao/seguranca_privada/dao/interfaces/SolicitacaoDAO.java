@@ -1,6 +1,11 @@
 package com.guibarao.seguranca_privada.dao.interfaces;
 
 import com.guibarao.seguranca_privada.models.Solicitacao;
+import com.guibarao.seguranca_privada.models.StatusSolicitacoes;
+import com.guibarao.seguranca_privada.services.SolicitacaoService;
+
+import java.time.LocalDate;
+import java.util.List;
 
 public interface SolicitacaoDAO {
 
@@ -10,5 +15,10 @@ public interface SolicitacaoDAO {
 
     public Boolean updateAtendente(Long idSolicitante, Long idAtendente);
 
-    public boolean deleteSolicitacao(Long idSolicitacao);
+    public boolean updateStatusSolicitacao(Long idSolicitacao, StatusSolicitacoes status);
+
+    public List<Solicitacao> readSolicitacoes(LocalDate dataInicial, LocalDate dataFinal,
+                                              StatusSolicitacoes status,
+                                              Long idAtendente, Long idSolicitante);
+
 }
