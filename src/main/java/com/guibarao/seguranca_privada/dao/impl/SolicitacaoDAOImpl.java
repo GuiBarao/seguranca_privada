@@ -184,7 +184,6 @@ public class SolicitacaoDAOImpl implements SolicitacaoDAO {
 
 
         try(PreparedStatement stmt = connection.prepareStatement(query.toString())) {
-            System.out.println(query.toString());
             for(int i = 0; i < parametros.size(); i++) {
                 stmt.setObject(i + 1, parametros.get(i), tipo_parametros.get(i));
             }

@@ -12,5 +12,4 @@ public class ItemEstoque {
     private String telefoneFornecedor;
     private Integer quantidadeEstoque;
     private String nome;
-    private boolean ativo;
 }

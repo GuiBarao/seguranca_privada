@@ -42,9 +42,17 @@ CREATE procedure itens_em_falta()
 
         SET nova_quantidade = quantidade_atual + alteracao;
 
+        IF nova_quantidade < 0 THEN
+            SIGNAL SQLSTATE '45000'
+                SET MESSAGE_TEXT = 'Erro: Quantidade indisponível no estoque.';
+
+        ELSE
+
         UPDATE item_estoque SET quantidade = nova_quantidade WHERE id = id_item;
 
         SELECT CONCAT('Alteração bem sucedida. Quantidade atual: ', nova_quantidade) AS mensagem;
+
+        END IF;
     end $$
 
 
