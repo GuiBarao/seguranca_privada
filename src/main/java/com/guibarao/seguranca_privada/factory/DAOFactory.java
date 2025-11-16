@@ -3,10 +3,7 @@ package com.guibarao.seguranca_privada.factory;
 import java.sql.Connection;
 
 import com.guibarao.seguranca_privada.dao.impl.*;
-import com.guibarao.seguranca_privada.dao.interfaces.EnderecoDAO;
-import com.guibarao.seguranca_privada.dao.interfaces.PlanoDAO;
-import com.guibarao.seguranca_privada.dao.interfaces.SolicitacaoDAO;
-import com.guibarao.seguranca_privada.dao.interfaces.UsuarioDAO;
+import com.guibarao.seguranca_privada.dao.interfaces.*;
 
 import lombok.*;
 import org.springframework.stereotype.Component;
@@ -29,5 +26,7 @@ public class DAOFactory {
     public PlanoDAO getPlanoDAO() {return new PlanoDAOImpl(connection);}
 
     public SolicitacaoDAO getSolicitacaoDAO() {return new SolicitacaoDAOImpl(connection);}
+
+    public EquipamentoDAO getEquipamentoDAO() {return new EquipamentoDAOImpl(connection);}
 }
 

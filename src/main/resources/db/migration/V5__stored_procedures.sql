@@ -10,7 +10,8 @@ CREATE procedure registra_equipamento_estoque(t VARCHAR(50), n VARCHAR(100), q i
 begin
     INSERT INTO item_estoque (telefone_fornecedor, nome, quantidade) VALUES (t, n, q);
 
-    SELECT 'Equipamento registrado no estoque!';
+    SELECT LAST_INSERT_ID() AS id_gerado;
+
 end $$
 
 CREATE procedure gerar_parcela(cliente INT, v DECIMAL, d DATE)
