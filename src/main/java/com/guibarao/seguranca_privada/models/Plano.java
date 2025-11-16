@@ -8,10 +8,23 @@ import lombok.*;
 @Setter
 public class Plano{
     private Long id;
-    private int maximoHorasAtendimento;
-    private int maxSegurancas;
+    private Integer maximoHorasAtendimento;
+    private Integer maxSegurancas;
     private BigDecimal valor;
-    private int maximoLocalizacoes;
+    private Integer maximoLocalizacoes;
     private String nome;
-    private boolean ativo;
+    private Boolean ativo;
+
+    @Override
+    public String toString() {
+        return "Plano{" +
+                "id=" + id +
+                ", maximoHorasAtendimento=" + maximoHorasAtendimento +
+                ", maxSegurancas=" + maxSegurancas +
+                ", valor=" + valor +
+                ", maximoLocalizacoes=" + maximoLocalizacoes +
+                ", nome='" + nome + '\'' +
+                ", ativo=" + ativo +
+                '}';
+    }
 }

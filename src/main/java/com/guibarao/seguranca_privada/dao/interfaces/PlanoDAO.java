@@ -9,4 +9,6 @@ public interface PlanoDAO {
     public Plano buscarPlanoByNome(String nomePlano);
 
     public Long createPlano(Plano plano);
+
+    public void updatePlano(Plano plano);
 }

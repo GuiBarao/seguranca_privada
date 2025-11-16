@@ -1,6 +1,7 @@
 package com.guibarao.seguranca_privada.services;
 
 import com.guibarao.seguranca_privada.dao.interfaces.PlanoDAO;
+import com.guibarao.seguranca_privada.dtos.plano.PlanoAtualizacaoDTO;
 import com.guibarao.seguranca_privada.dtos.plano.PlanoCadastroDTO;
 import com.guibarao.seguranca_privada.dtos.plano.PlanoPublicDTO;
 import com.guibarao.seguranca_privada.factory.ConnectionFactory;
@@ -47,6 +48,23 @@ public class PlanoService {
             System.out.println(e.getMessage());
             return null;
         }
+
+    }
+
+    public void atualizar(PlanoAtualizacaoDTO dadosAtualizacao) {
+
+        try(Connection connection = connectionFactory.getConnection()) {
+            DAOFactory daoFactory = new DAOFactory(connection);
+            PlanoDAO planoDAO = daoFactory.getPlanoDAO();
+
+            Plano planoModelAtualizacao = planoMapper.toModel(dadosAtualizacao);
+
+            planoDAO.updatePlano(planoModelAtualizacao);
+        }
+        catch(SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
 
     }
 
